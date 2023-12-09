@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="index.css">
+  <title>INTERACTIVE MAP</title>
+</head>
+
+<body>
+  <div id="map"></div>
+  <form id="marker-form">
+    <label for="marker-name">Маркер:</label>
+    <input type="text" id="marker-name" placeholder="Введите название маркера">
+    <button type="button" onclick="addMarker()">Добавить/Обновить маркер</button>
+  </form>
+
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>
