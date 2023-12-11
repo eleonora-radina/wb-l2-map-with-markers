@@ -13,14 +13,30 @@
 
 <body>
   <div id="map"></div>
+
   <form id="marker-form">
     <label for="marker-name">Маркер:</label>
     <input type="text" id="marker-name" placeholder="Введите название маркера">
-    <button type="button" onclick="addMarker()">Добавить/Обновить маркер</button>
-  </form>
+    <label for="marker-type">Тип:</label>
+    <input type="text" id="marker-type" placeholder="Введите тип маркера">
+    <label for="marker-description">Описание:</label>
+    <textarea id="marker-description" placeholder="Введите описание маркера"></textarea>
 
+    <label for="marker-color">Цвет:</label>
+    <select id="marker-color">
+      <option value="blue">Синий</option>
+      <option value="red">Красный</option>
+      <option value="gold">Золотой</option>
+      <option value="green">Зеленый</option>
+      <option value="violet">Фиолетовый</option>
+    </select>
+
+
+    <button type="button" onclick="addMarker()">Добавить маркер</button>
+  </form>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="./index.js"></script>
 </body>
+
 </html>

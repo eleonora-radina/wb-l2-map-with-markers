@@ -1,64 +1,106 @@
-const map = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+//Определяем карту, координаты центра и начальный масштаб
+const map = L.map('map').setView([55.755864, 37.617698], 13);
 
-    const markersLayer = L.layerGroup();
-    markersLayer.addTo(map);
+//Добавляем на нашу карту слой OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-    const savedMarkers = JSON.parse(localStorage.getItem('markers')) || [];
+const markersLayer = L.layerGroup();
+markersLayer.addTo(map);
 
-    const markerForm = document.getElementById('marker-form');
-    const markerNameInput = document.getElementById('marker-name');
-    //let editingMarker = null;
+function setIconColor(iconColor) {
+  return icon = new L.Icon({
+    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${iconColor}.png`,
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+}
 
-    // Отображение маркеров из localStorage
-    savedMarkers.forEach(markerData => {
-      const marker = createMarker(markerData);
-      markersLayer.addLayer(marker);
+function deleteMarker(markerId) {
+  const marker = markersLayer.getLayers().find(el => el._leaflet_id === markerId);
+  markersLayer.removeLayer(marker);
+  console.log(marker);
+  saveMarkers();
+  //map.removeLayer(marker);
+}
+
+function createPopupContent(name, type, description, markerId) {
+  return `
+    <strong>${name}</strong><br>
+    Type: ${type}<br>
+    Description: ${description}<br>
+    <button onClick="deleteMarker(${markerId})" class="deleteBtn">Удалить</button>
+  `;
+}
+
+function addMarker() {
+  const markerName = document.getElementById('marker-name').value;
+  const markerType = document.getElementById('marker-type').value;
+  const markerDescription = document.getElementById('marker-description').value;
+  const markerColor = document.getElementById('marker-color').value; // Добавлено получение выбранного цвета
+
+  if (markerName) {
+    const marker = L.marker(map.getCenter(), {
+      draggable: true,
+      icon: setIconColor(markerColor),
+      iconColor: markerColor,
+      name: markerName,
+      type: markerType,
+      description: markerDescription
+    })
+      .addTo(markersLayer);
+
+    marker.bindPopup(createPopupContent(markerName, markerType, markerDescription, marker._leaflet_id));
+
+    marker.on('dragend', function (event) {
+      //const { lat, lng } = event.target.getLatLng();
+      saveMarkers();
     });
 
-    // Добавление нового маркера
-    function addMarker() {
-      const markerName = markerNameInput.value;
-      if (markerName !== '') {
-        const newMarker = createMarker({ name: markerName });
-        markersLayer.addLayer(newMarker);
-        saveMarkers();
-        markerNameInput.value = '';
-      }
-    }
+    saveMarkers();
+    clearForm();
+  }
+}
 
-    // Создание маркера
-    function createMarker(markerData) {
-      const marker = L.marker([markerData.lat || 51.5, markerData.lng || -0.09], { draggable: true });
-      marker.bindPopup(markerData.name);
+function saveMarkers() {
+  const markersData = markersLayer.getLayers().map(marker => {
+    const { lat, lng } = marker.getLatLng();
+    return {
+      //id: marker._leaflet_id,
+      name: marker.options.name,
+      type: marker.options.type,
+      description: marker.options.description,
+      iconColor: marker.options.iconColor,
+      lat,
+      lng,
+    };
+  });
+  localStorage.setItem('markers', JSON.stringify(markersData));
+}
 
-      marker.on('dragend', function (event) {
-        const { lat, lng } = event.target.getLatLng();
-        markerData.lat = lat;
-        markerData.lng = lng;
-        saveMarkers();
-      });
+function clearForm() {
+  document.getElementById('marker-name').value = '';
+  document.getElementById('marker-type').value = '';
+  document.getElementById('marker-description').value = '';
+}
 
-      /*marker.on('click', function (event) {
-        if (!editingMarker) {
-          // Редактирование маркера при клике, если нет активного редактирования
-          editingMarker = marker;
-          markerNameInput.value = markerData.name;
-          markersLayer.removeLayer(marker);
-        } else {
-          // Завершение редактирования
-          editingMarker = null;
-          addMarker();
-        }
-      });*/
-
-      return marker;
-    }
-
-    function saveMarkers() {
-      const markersData = markersLayer.getLayers().map(marker => {
-        const { lat, lng } = marker.getLatLng();
-        return { name: marker.getPopup().getContent(), lat, lng };
-      });
-      localStorage.setItem('markers', JSON.stringify(markersData));
-    }
+const savedMarkers = JSON.parse(localStorage.getItem('markers')) || [];
+savedMarkers.forEach(markerData => {
+  const marker = L.marker([markerData.lat, markerData.lng], {
+    icon: setIconColor(markerData.iconColor),
+    draggable: true,
+    type: markerData.type,
+    description: markerData.description,
+    iconColor: markerData.iconColor,
+    name: markerData.name,
+  })
+    .addTo(markersLayer);
+    
+  marker.bindPopup(createPopupContent(markerData.name, markerData.type, markerData.description, marker._leaflet_id));
+  marker.on('dragend', function (event) {
+    //const { lat, lng } = event.target.getLatLng();
+    saveMarkers();
+  });
+});

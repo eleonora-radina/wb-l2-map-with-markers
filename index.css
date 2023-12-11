@@ -1,7 +1,19 @@
 #map {
-	height: 500px;
-  }
+	height: 600px;
+}
 
-  #marker-form {
+#marker-form {
 	margin-top: 10px;
-  }
+}
+
+.deleteBtn {
+  margin-top: 5px;
+  border: 1px solid lightgrey;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #333;
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
