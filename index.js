@@ -175,26 +175,32 @@ function resetSearch() {
 
 // показать блок с редактированием 
 function showEditContainer() {
+  const search = document.getElementById("search-container");
   const editContainer = document.querySelector(".container_edit");
   const addContainer = document.querySelector(".container_add");
   const map = document.getElementById("map");
 
   editContainer.style.display = "block";
+  search.style.pointerEvents = 'none';
   addContainer.style.pointerEvents = 'none';
   map.style.pointerEvents = 'none';
+  search.style.opacity = '0.6';
   addContainer.style.opacity = '0.6';
   map.style.opacity = '0.6';
 }
 
 // скрыть блок с редактированием 
 function hideEditContainer() {
+  const search = document.getElementById("search-container");
   const editContainer = document.querySelector(".container_edit");
   const addContainer = document.querySelector(".container_add");
   const map = document.getElementById("map");
 
   editContainer.style.display = "none";
+  search.style.pointerEvents = 'auto';
   addContainer.style.pointerEvents = 'auto';
   map.style.pointerEvents = 'auto';
+  search.style.opacity = '1';
   addContainer.style.opacity = '1';
   map.style.opacity = '1';
 }
