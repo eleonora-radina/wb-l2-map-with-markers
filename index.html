@@ -11,29 +11,59 @@
   <title>INTERACTIVE MAP</title>
 </head>
 
-<body>
+<body class="page">
   <div id="map"></div>
 
-  <form id="marker-form">
-    <label for="marker-name">Маркер:</label>
-    <input type="text" id="marker-name" placeholder="Введите название маркера">
-    <label for="marker-type">Тип:</label>
-    <input type="text" id="marker-type" placeholder="Введите тип маркера">
-    <label for="marker-description">Описание:</label>
-    <textarea id="marker-description" placeholder="Введите описание маркера"></textarea>
+  <div class="container container_edit">
+    <p class="title">Отредактировать маркер:</p>
+    <form id="edit-marker-form">
+      <label for="marker-name">Отредактировать:</label>
+      <input type="text" id="edit-marker-name" placeholder="Название" required>
+      <label for="marker-type">Тип:</label>
+      <input type="text" id="edit-marker-type" placeholder="Тип">
+      <label for="marker-description">Описание:</label>
+      <input type="text" id="edit-marker-description" placeholder="Описание"></input>
+      <label for="marker-color">Цвет:</label>
+      <select id="edit-marker-color">
+        <option value="blue">Синий</option>
+        <option value="red">Красный</option>
+        <option value="gold">Золотой</option>
+        <option value="green">Зеленый</option>
+        <option value="violet">Фиолетовый</option>
+      </select>
+    </form>
+    <button type="button" id="edit-button" class="addButton">Отредактировать</button>
+  </div>
 
-    <label for="marker-color">Цвет:</label>
-    <select id="marker-color">
-      <option value="blue">Синий</option>
-      <option value="red">Красный</option>
-      <option value="gold">Золотой</option>
-      <option value="green">Зеленый</option>
-      <option value="violet">Фиолетовый</option>
-    </select>
+  <div id="search-container" class="container">
+    <label for="search-text" class="title">Поиск:</label>
+    <input type="text" id="search-text" placeholder="Введите текст">
+    <button type="button" class="search-btn" onclick="searchMarkers()" style="
+    color: #fff; background-color: #b0bdd3;">Искать</button>
+    <button type="button" class="search-btn" onclick="resetSearch()">Сбросить поиск</button>
+  </div>
+  
+  <div class="container container_add">
+    <p class="title">Добавьте маркер:</p>
+    <form id="marker-form">
+      <label for="marker-name">Название:</label>
+      <input type="text" id="marker-name" placeholder="Название" required>
+      <label for="marker-type">Тип:</label>
+      <input type="text" id="marker-type" placeholder="Тип">
+      <label for="marker-description">Описание:</label>
+      <input type="text" id="marker-description" placeholder="Описание"></input>
 
-
-    <button type="button" onclick="addMarker()">Добавить маркер</button>
-  </form>
+      <label for="marker-color">Цвет:</label>
+      <select id="marker-color">
+        <option value="blue">Синий</option>
+        <option value="red">Красный</option>
+        <option value="gold">Золотой</option>
+        <option value="green">Зеленый</option>
+        <option value="violet">Фиолетовый</option>
+      </select>
+    </form>
+    <button type="button" onclick="addMarker()" class="addButton">Добавить маркер</button>
+  </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="./index.js"></script>

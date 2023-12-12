@@ -1,9 +1,54 @@
+.page {
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  color: #333;
+}
+
 #map {
-	height: 600px;
+	height: 500px;
+}
+
+.title {
+  font-size: 21px;
+  font-weight: bold;
+  margin: 0 0 8px;
+}
+
+.container {
+  border: 1px solid lightgrey;
+  background-color: rgb(247, 250, 255);
+  border-radius: 15px;
+  padding: 25px 30px 20px 45px;
+  width: 94%;
+  margin: 20px auto;
+}
+
+.container_edit {
+  display: none;
+  border: 1px solid #96a9d3;
 }
 
 #marker-form {
-	margin-top: 10px;
+	display: flex;
+  gap: 10px;
+  height: 28px;
+  align-items: flex-end;
+}
+
+select, option {
+  cursor: pointer;
+  color: #333;
+  font-size: 13px;
+}
+
+.addButton {
+  border: 1px solid white;
+  background-color: #f7d8a1;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 28px;
+  padding: 9px 34px;
+  box-shadow: 1px 1px 3px lightgray;
 }
 
 .deleteBtn {
@@ -16,4 +61,26 @@
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 13px;
   cursor: pointer;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  background-color: rgb(247, 250, 255);
+  padding: 10px 5px 2px;
+}
+
+#search-text {
+  margin: 0 10px 0 25px;
+  width: 20%;
+}
+
+.search-btn {
+  border: 1px solid white;
+  background-color: #f7d8a1;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 5px 26px;
 }
